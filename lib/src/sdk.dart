@@ -68,6 +68,22 @@ class Sdk {
     );
   }
 
+  factory Sdk.local({
+    required String flutterPath,
+    required String channel,
+  }) {
+    final flutterBinPath = path.join(flutterPath, 'bin');
+    final dartSdkPath = path.join(flutterBinPath, 'cache', 'dart-sdk');
+    return _instance ??= Sdk._(
+      sdkPath: flutterPath,
+      flutterBinPath: flutterBinPath,
+      dartSdkPath: dartSdkPath,
+      versionFull: _readVersionFile(dartSdkPath),
+      flutterVersion: _readVersionFile(flutterPath),
+      channel: channel,
+    );
+  }
+
   Sdk._({
     required this.sdkPath,
     required String flutterBinPath,
